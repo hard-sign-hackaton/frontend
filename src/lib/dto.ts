@@ -27,3 +27,9 @@ export type DynamicData = {
 };
 
 export type Emergency = string;
+
+export type Widget = {
+  type: string;
+  settings: object;
+  data: object | [];
+};
