@@ -3,6 +3,7 @@
     import VerticalMultiwidget from "./VerticalMultiwidget.svelte";
     import NewsWidget from "./NewsWidget.svelte";
     import StaticDataWidget from "./StaticDataWidget.svelte";
+    import DynamicDataWidget from "./DynamicDataWidget.svelte";
 
     const { widget } = $props();
 </script>
@@ -11,6 +12,8 @@
     <NewsWidget news={widget.data.news} />
 {:else if widget.type === "static"}
     <StaticDataWidget {...widget.data} />
+{:else if widget.type === "dynamic"}
+    <DynamicDataWidget {...widget.data} />
 {:else if widget.type === "horizontal"}
     <HorizontalMultiwidget widgets={widget.data} settings={widget.settings} />
 {:else if widget.type === "vertical"}
