@@ -3,6 +3,7 @@
   import type { NewsItem } from "../lib/dto";
 
   import NewsWidget from "./widgets/NewsWidget.svelte";
+  import StaticDataWidget from "./widgets/StaticDataWidget.svelte"
 
   const { id } = $derived(useParams());
   let datetime = $state(new Date());
@@ -69,7 +70,7 @@
     <NewsWidget news={news} />
   </div>
   <div class="h-[40%] p-1 m-1 border border-purple-500 bg-white">
-    Static block
+    <StaticDataWidget />
   </div>
   <div class="h-[15%] p-1 m-1 border border-yellow-500 bg-white">
     Dynamic block
