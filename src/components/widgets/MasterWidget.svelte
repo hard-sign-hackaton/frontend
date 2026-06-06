@@ -4,78 +4,82 @@
     import EmergencyWidget from "./EmergencyWidget.svelte";
     import HeaderWidget from "./HeaderWidget.svelte";
 
-    const data = [
-        {
-            type: "news",
-            height: 40,
-            settings: {},
-            data: {
-                news: [
-                    {
-                        title: "Title #1",
-                        text: "adjaragudzhu",
-                        date: "2026-06-06",
-                    } as NewsItem,
-                    {
-                        title: "Title #2",
-                        text: '<p style="color: red;">lolxd</p>',
-                        date: "2026-06-06",
-                    } as NewsItem,
-                    {
-                        title: "Title #3",
-                        text: "adjaragudzhu",
-                        date: "2026-06-06",
-                    } as NewsItem,
-                ],
-            },
+    const data = {
+        type: "vertical",
+        settings: {
+            k: 3,
+            hs: [40, 40, 20],
         },
-        {
-            type: "horizontal",
-            height: 40,
-            settings: {
-                k: 2,
-                ws: [60, 40],
-            },
-            data: [
-                {
-                    type: "static",
-                    data: {
-                        title: "1",
-                        text: "1",
-                    },
-                },
-                {
-                    type: "vertical",
-                    settings: {
-                        k: 2,
-                        hs: [50, 50],
-                    },
-                    data: [
+        data: [
+            {
+                type: "news",
+                settings: {},
+                data: {
+                    news: [
                         {
-                            type: "static",
-                            data: {
-                                title: "2",
-                                text: "2",
-                            },
-                        },
+                            title: "Title #1",
+                            text: "adjaragudzhu",
+                            date: "2026-06-06",
+                        } as NewsItem,
                         {
-                            type: "static",
-                            data: {
-                                title: "3",
-                                text: "3",
-                            },
-                        },
+                            title: "Title #2",
+                            text: '<p style="color: red;">lolxd</p>',
+                            date: "2026-06-06",
+                        } as NewsItem,
+                        {
+                            title: "Title #3",
+                            text: "adjaragudzhu",
+                            date: "2026-06-06",
+                        } as NewsItem,
                     ],
                 },
-            ],
-        },
-        {
-            type: "dynamic",
-            height: 20,
-            settings: {},
-            data: {},
-        },
-    ];
+            },
+            {
+                type: "horizontal",
+                settings: {
+                    k: 2,
+                    ws: [60, 40],
+                },
+                data: [
+                    {
+                        type: "static",
+                        data: {
+                            title: "1",
+                            text: "1",
+                        },
+                    },
+                    {
+                        type: "vertical",
+                        settings: {
+                            k: 2,
+                            hs: [50, 50],
+                        },
+                        data: [
+                            {
+                                type: "static",
+                                data: {
+                                    title: "2",
+                                    text: "2",
+                                },
+                            },
+                            {
+                                type: "static",
+                                data: {
+                                    title: "3",
+                                    text: "3",
+                                },
+                            },
+                        ],
+                    },
+                ],
+            },
+            {
+                type: "dynamic",
+                settings: {},
+                data: {},
+            },
+        ],
+    };
 
     const emergency = false;
 </script>
@@ -87,7 +91,10 @@
         <HeaderWidget />
     {/if}
 
-    {#each data as widget}
+    <!-- {#each data as widget}
         <BuilderWidget {widget} />
-    {/each}
+    {/each} -->
+    <div class="h-[95%]">
+        <BuilderWidget widget={data} />
+    </div>
 </div>

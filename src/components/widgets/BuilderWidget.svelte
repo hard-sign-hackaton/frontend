@@ -7,19 +7,14 @@
     const { widget } = $props();
 </script>
 
-<div class={`p-2`} style={`height: ${widget.height}%`}>
-    {#if widget.type === "news"}
-        <NewsWidget news={widget.data.news} />
-    {:else if widget.type === "static"}
-        <StaticDataWidget {...widget.data} />
-    {:else if widget.type === "horizontal"}
-        <HorizontalMultiwidget
-            widgets={widget.data}
-            settings={widget.settings}
-        />
-    {:else if widget.type === "vertical"}
-        <VerticalMultiwidget widgets={widget.data} settings={widget.settings} />
-    {:else}
-        <div>wtf</div>
-    {/if}
-</div>
+{#if widget.type === "news"}
+    <NewsWidget news={widget.data.news} />
+{:else if widget.type === "static"}
+    <StaticDataWidget {...widget.data} />
+{:else if widget.type === "horizontal"}
+    <HorizontalMultiwidget widgets={widget.data} settings={widget.settings} />
+{:else if widget.type === "vertical"}
+    <VerticalMultiwidget widgets={widget.data} settings={widget.settings} />
+{:else}
+    <div>wtf</div>
+{/if}
