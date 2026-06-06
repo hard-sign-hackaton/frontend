@@ -1,14 +1,14 @@
-type NewsItemType = {
+export type NewsItemType = {
   slug: string;
   title: string;
 };
 
-type Building = {
+export type Building = {
   id: number;
   title: string;
 };
 
-type NewsItem = {
+export type NewsItem = {
   id: number;
   title: string;
   text: string;
@@ -16,14 +16,14 @@ type NewsItem = {
   type: NewsItemType;
 };
 
-type StaticData = {
+export type StaticData = {
   type: string;
   content: string;
 };
 
-type DynamicData = {
+export type DynamicData = {
   type: string;
   content: string;
 };
 
-type Emergency = string;
+export type Emergency = string;
