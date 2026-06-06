@@ -9,13 +9,13 @@
 </script>
 
 <section class="h-full">
-    <h1 class="font-bold text-2xl">News</h1>
+    <h1>News</h1>
     <hr class="opacity-25 mb-2" />
     {#each news as v, i}
         <div>
             <div class="flex flex-row">
-                <h1 class="font-bold text-xl mr-2">{v.title}</h1>
-                <div class="text-xs flex items-center opacity-20">
+                <h1 class="mr-2">{v.title}</h1>
+                <div class="small-text flex items-center opacity-20">
                     {formatDate(v.date)}
                 </div>
             </div>

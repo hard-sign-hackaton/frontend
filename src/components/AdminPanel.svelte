@@ -1,4 +1,5 @@
 <script>
+  import MasterWidget from "./widgets/MasterWidget.svelte";
 </script>
 
 <svelte:head>
@@ -10,18 +11,13 @@
   <div class="flex flex-row justify-around">
     <div>
       <h2>Preview</h2>
-      <div class="border border-red-500 w-81 h-144">
-        <div
-          class="h-[5%] p-1 m-1 border border-green-500 flex flex-row justify-between"
-        >
-          <div class="text-green-500"></div>
-          <div>00:00</div>
-        </div>
+      <div class="container border border-red-500 w-90 h-160">
+        <MasterWidget />
       </div>
     </div>
     <div>
       <h2>Editor</h2>
-      <div class="border border-red-500 w-81 h-144">
+      <div class="border border-red-500 w-90 h-160">
         <div
           class="h-[5%] p-1 m-1 border border-green-500 bg-red-400 flex flex-row justify-between"
         ></div>

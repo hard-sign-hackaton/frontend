@@ -3,6 +3,6 @@
 </script>
 
 <div class="w-full h-full">
-    <h2 class="text-xl">{title}</h2>
+    <h2>{title}</h2>
     <p>{text}</p>
 </div>

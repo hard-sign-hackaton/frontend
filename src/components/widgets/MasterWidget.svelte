@@ -84,7 +84,7 @@
     const emergency = false;
 </script>
 
-<div class="h-screen">
+<div id="master-widget" class="h-full">
     {#if emergency}
         <EmergencyWidget />
     {:else}
