@@ -1,10 +1,12 @@
 <script lang="ts">
   import { useParams } from "@hvniel/svelte-router";
+  import type { NewsItem } from "lib/dto";
 
   const { id } = $derived(useParams());
   let datetime = $state(new Date());
 
   let isEmergency = $state<Boolean>(false);
+  let news = $state<NewsItem[]>([]);
 
   function formatDateTime(v: Date): string {
     let str = v.toLocaleDateString("ru-RU", {
@@ -20,8 +22,8 @@
   $effect(() => {
     setInterval(() => {
       datetime = new Date();
-    }, 1000*30)
-  })
+    }, 1000 * 30);
+  });
 </script>
 
 <svelte:head>
@@ -32,18 +34,24 @@
   class={`flex flex-col justify-between h-screen w-full border border-red-500 ${isEmergency ? "bg-red-500" : ""}`}
 >
   {#if isEmergency}
-    <div class="h-[5%] p-1 m-1 border border-green-500 bg-red-500 text-white text-2xl text-center">
+    <div
+      class="h-[5%] p-1 m-1 border border-green-500 bg-red-500 text-white text-2xl text-center"
+    >
       AAAAAAAAAAAAAAAAAAAAAAAAAA
     </div>
   {:else}
     <div
       class="h-[5%] p-1 m-1 border border-green-500 flex flex-row justify-between"
     >
-      <div>({ id })</div>
-      <div>{ formatDateTime(datetime) }</div>
+      <div>({id})</div>
+      <div>{formatDateTime(datetime)}</div>
     </div>
   {/if}
   <div class="h-full p-1 m-1 border border-blue-500 bg-white">News block</div>
-  <div class="h-[40%] p-1 m-1 border border-purple-500 bg-white">Static block</div>
-  <div class="h-[15%] p-1 m-1 border border-yellow-500 bg-white">Dynamic block</div>
+  <div class="h-[40%] p-1 m-1 border border-purple-500 bg-white">
+    Static block
+  </div>
+  <div class="h-[15%] p-1 m-1 border border-yellow-500 bg-white">
+    Dynamic block
+  </div>
 </main>
