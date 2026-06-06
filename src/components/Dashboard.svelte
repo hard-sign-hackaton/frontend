@@ -1,12 +1,30 @@
 <script lang="ts">
   import { useParams } from "@hvniel/svelte-router";
-  import type { NewsItem } from "lib/dto";
+  import type { NewsItem } from "../lib/dto";
+
+  import NewsWidget from "./widgets/NewsWidget.svelte";
 
   const { id } = $derived(useParams());
   let datetime = $state(new Date());
 
   let isEmergency = $state<Boolean>(false);
-  let news = $state<NewsItem[]>([]);
+  let news = $state<NewsItem[]>([
+    {
+      title: "Title #1",
+      text: "adjaragudzhu",
+      date: "2026-06-06"
+    } as NewsItem,
+    {
+      title: "Title #2",
+      text: "<p style=\"color: red;\">lolxd</p>",
+      date: "2026-06-06"
+    } as NewsItem,
+    {
+      title: "Title #3",
+      text: "adjaragudzhu",
+      date: "2026-06-06"
+    } as NewsItem,
+  ]);
 
   function formatDateTime(v: Date): string {
     let str = v.toLocaleDateString("ru-RU", {
@@ -47,7 +65,9 @@
       <div>{formatDateTime(datetime)}</div>
     </div>
   {/if}
-  <div class="h-full p-1 m-1 border border-blue-500 bg-white">News block</div>
+  <div class="h-full p-1 m-1 border border-blue-500 bg-white">
+    <NewsWidget news={news} />
+  </div>
   <div class="h-[40%] p-1 m-1 border border-purple-500 bg-white">
     Static block
   </div>
