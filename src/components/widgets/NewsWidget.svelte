@@ -8,11 +8,11 @@
     }
 </script>
 
-<section class="h-full border border-red-500">
-    <h1>Новости</h1>
+<section class="h-full bg-white rounded-3xl p-4">
+    <h1 class="">Новости</h1>
     <hr class="opacity-25 mb-2" />
     {#each news as v, i}
-        <div>
+        <div class="mb-2">
             <div class="flex flex-row">
                 <h1 class="mr-2">{v.title}</h1>
                 <div class="small-text flex items-center opacity-20">
@@ -20,9 +20,7 @@
                 </div>
             </div>
             {@html v.text}
-            {#if i != news.length - 1}
-                <hr class="opacity-25 mb-2" />
-            {/if}
         </div>
+        <hr class="opacity-25 mb-2" />
     {/each}
 </section>
