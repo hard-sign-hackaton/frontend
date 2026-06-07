@@ -1,5 +1,5 @@
 <div
-    class="h-[5%] p-1 m-1 border border-green-500 bg-red-500 text-white text-2xl text-center"
+    class="min-h-[5%] max-h-[10%] bg-red-500 text-white text-[5vw] text-center text-wrap wrap-break-word"
 >
-    AAAAAAAAAAAAAAAAAAAAAAAAAA
+    AAAAAAAAAAAAAAAAAAAAAAAAAAA
 </div>

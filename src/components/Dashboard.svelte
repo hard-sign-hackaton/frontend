@@ -1,58 +1,16 @@
 <script lang="ts">
-  import { useParams } from "@hvniel/svelte-router";
-  import type { NewsItem } from "../lib/dto";
+    import MasterWidget from "./widgets/MasterWidget.svelte";
 
-  import NewsWidget from "./widgets/NewsWidget.svelte";
-  import StaticDataWidget from "./widgets/StaticDataWidget.svelte";
-  import MasterWidget from "./widgets/MasterWidget.svelte";
-
-  const { id } = $derived(useParams());
-  let datetime = $state(new Date());
-
-  let isEmergency = $state<Boolean>(false);
-  let news = $state<NewsItem[]>([
-    {
-      title: "Title #1",
-      text: "adjaragudzhu",
-      date: "2026-06-06",
-    } as NewsItem,
-    {
-      title: "Title #2",
-      text: '<p style="color: red;">lolxd</p>',
-      date: "2026-06-06",
-    } as NewsItem,
-    {
-      title: "Title #3",
-      text: "adjaragudzhu",
-      date: "2026-06-06",
-    } as NewsItem,
-  ]);
-
-  function formatDateTime(v: Date): string {
-    let str = v.toLocaleDateString("ru-RU", {
-      weekday: "long",
-      day: "numeric",
-      month: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-    return str.charAt(0).toUpperCase() + str.slice(1);
-  }
-
-  $effect(() => {
-    setInterval(() => {
-      datetime = new Date();
-    }, 1000 * 30);
-  });
+    import data from "../lib/mock_data";
 </script>
 
 <svelte:head>
-  <title>Dashboard</title>
+    <title>Dashboard</title>
 </svelte:head>
 
 <main
-  class={`flex flex-col justify-between h-screen w-full border border-red-500 ${isEmergency ? "bg-red-500" : ""}`}
-  id="dashboard"
+    class={`flex flex-col justify-between h-screen w-full p-4 bg-slate-300`}
+    id="dashboard"
 >
-  <MasterWidget />
+    <MasterWidget {data} />
 </main>
