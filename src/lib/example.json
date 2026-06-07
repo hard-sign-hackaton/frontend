@@ -1,0 +1,35 @@
+{
+  "id": 1,
+  "type": "vertical",
+  "settings": {
+    "k": 2,
+    "hs": [50, 50]
+  },
+  "data": [
+    {
+      "id": 2,
+      "type": "news",
+      "settings": {}
+    },
+    {
+      "id": 3,
+      "type": "horizontal",
+      "settings": {
+        "k": 2,
+        "ws": [50, 50]
+      },
+      "data": [
+        {
+          "id": 4,
+          "type": "static",
+          "settings": {}
+        },
+        {
+          "id": 5,
+          "type": "static",
+          "settings": {}
+        }
+      ]
+    }
+  ]
+}

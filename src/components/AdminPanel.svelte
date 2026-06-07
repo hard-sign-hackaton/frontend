@@ -1,5 +1,8 @@
 <script>
+  import SkeletonBuilder from "./skeleton_widgets/SkeletonBuilder.svelte";
   import MasterWidget from "./widgets/MasterWidget.svelte";
+
+  import data from "../lib/mock_data";
 </script>
 
 <svelte:head>
@@ -19,8 +22,11 @@
       <h2>Editor</h2>
       <div class="border border-red-500 w-90 h-160">
         <div
-          class="h-[5%] p-1 m-1 border border-green-500 bg-red-400 flex flex-row justify-between"
+          class="h-[5%] p-1 border border-green-500 bg-red-400 flex flex-row justify-between"
         ></div>
+        <div class="h-[95%] p-1">
+          <SkeletonBuilder widget={data} />
+        </div>
       </div>
     </div>
     <div>
