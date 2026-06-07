@@ -21,7 +21,7 @@
   class="h-full flex flex-col shrink-0 border border-gray-500 rounded-sm p-2 hover:cursor-pointer hover:border-cyan-500"
   onclick={handleClick}
 >
-  {#each hs as h, i}
+  {#each hs as h, i (i)}
     <div
       class={`w-full p-2 hover:cursor-pointer hover:border-cyan-500`}
       style={`height: ${h}%;`}

@@ -6,7 +6,7 @@
   const { widget } = $props();
 </script>
 
-{#if widget.type === "news" || widget.type === "static" || widget.type === "dynamic"}
+{#if widget.type === "news" || widget.type === "static" || widget.type === "dynamic" || widget.type === "empty"}
   <SkeletonData type={widget.type} id={widget.id} />
 {:else if widget.type === "horizontal"}
   <SkeletonHorizontal
@@ -22,6 +22,4 @@
     id={widget.id}
     type={widget.type}
   />
-{:else}
-  <SkeletonData type={"empty"} id={"?"} />
 {/if}
