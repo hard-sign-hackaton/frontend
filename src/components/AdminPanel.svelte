@@ -5,21 +5,11 @@
     selected_widget_id,
     selected_widget_type,
   } from "../lib/editor_store";
+  import { mock_news, mock_static, mock_dynamic } from "../lib/mock_data";
 
-  // import data from "../lib/mock_data";
   let deafult_data = {
     id: 0,
-    type: "vertical",
-    settings: {
-      k: 1,
-      hs: [100],
-    },
-    data: [
-      {
-        id: 1,
-        type: "empty",
-      },
-    ],
+    type: "empty",
   };
   let data = $state(deafult_data);
   let id = 1;
@@ -28,6 +18,8 @@
   const lengths = [1, 2, 3];
   let k = $state(1);
   let ks = $state([0, 0, 0]);
+  let current_static_title = $state("");
+  let current_static_content = $state("");
 
   function sleep() {
     return new Promise((resolve) => setTimeout(resolve, 100));
@@ -51,28 +43,42 @@
     return null;
   }
 
+  async function handleStaticChange() {
+    await sleep();
+    const target = findById(data, $selected_widget_id);
+    target.data.title = current_static_title;
+    target.data.text = current_static_content;
+  }
+
   function createFields(target: any, type: string) {
     if (type === "vertical") {
       target.settings = { k: 1, hs: [100] };
+      k = 1;
+      ks = [100, 0, 0];
       target.data = [{ id: nextId(), type: "empty" }];
     } else if (type === "horizontal") {
       target.settings = { k: 1, ws: [100] };
+      k = 1;
+      ks = [100, 0, 0];
       target.data = [{ id: nextId(), type: "empty" }];
     } else if (type === "news") {
       target.settings = {};
-      target.data = { news: [] };
+      target.data = mock_news;
     } else if (type === "static") {
       target.settings = {};
-      target.data = { title: "", text: "" };
+      target.data = {
+        title: "",
+        text: "",
+      };
     } else if (type === "dynamic") {
       target.settings = {};
-      target.data = { title: "", text: "" };
+      target.data = mock_dynamic;
     }
   }
 
+  // find element with current id and fill it with k empty elements
   async function handleKChange() {
     await sleep();
-    // find element with current id and fill it with k empty elements
     const target = findById(data, $selected_widget_id);
     target.settings.k = k;
     if ($selected_widget_type === "vertical") {
@@ -114,12 +120,11 @@
     createFields(target, newType);
   }
 
-  function handleDelete() {
-    // find element with current id and delete if from the tree
+  function cleanWidgetTree(tree: object) {
+    // clean tree from mock data
   }
-
   function saveTemplate() {
-    // send template to server
+    // send cleaned tree to server
   }
 
   // $effect(() => {
@@ -169,12 +174,11 @@
         </form>
 
         <h3>Widget editor</h3>
-        <div>{$selected_widget_id}</div>
-        <div>{$selected_widget_type}</div>
         <form>
           <select
             name=""
             id=""
+            class="block"
             bind:value={$selected_widget_type}
             oninput={handleTypeChange}
           >
@@ -204,13 +208,20 @@
                 oninput={handleKsChange}
               />
             {/each}
+          {:else if $selected_widget_type == "static"}
+            <input
+              type="text"
+              placeholder="Title"
+              bind:value={current_static_title}
+              oninput={handleStaticChange}
+            />
+            <input
+              type="text"
+              placeholder="Content"
+              bind:value={current_static_content}
+              oninput={handleStaticChange}
+            />
           {/if}
-          <div class="flex flex-row justify-around m-2">
-            <button
-              class="p-2 bg-red-500 rounded-md text-white hover:cursor-pointer hover:opacity-60"
-              onclick={handleDelete}>Delete</button
-            >
-          </div>
         </form>
       </div>
     </div>
