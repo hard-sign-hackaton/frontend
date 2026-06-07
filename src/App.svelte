@@ -8,6 +8,6 @@
 <BrowserRouter>
     <Routes>
         <Route path="/" Component={AdminPanel} />
-        <Route path="/demo/:id" Component={MasterWidget} />
+        <Route path="/demo/:id" Component={Dashboard} />
     </Routes>
 </BrowserRouter>

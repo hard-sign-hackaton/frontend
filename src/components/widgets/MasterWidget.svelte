@@ -44,7 +44,7 @@
                     {
                         type: "static",
                         data: {
-                            title: "1",
+                            title: "Статические данные 1",
                             text: "1",
                         },
                     },
@@ -58,14 +58,14 @@
                             {
                                 type: "static",
                                 data: {
-                                    title: "2",
+                                    title: "Статические данные 2",
                                     text: "2",
                                 },
                             },
                             {
                                 type: "static",
                                 data: {
-                                    title: "3",
+                                    title: "Статические данные 3",
                                     text: "3",
                                 },
                             },
@@ -76,7 +76,10 @@
             {
                 type: "dynamic",
                 settings: {},
-                data: {},
+                data: {
+                    title: "Здесь будут динамические данные",
+                    text: "",
+                },
             },
         ],
     };
@@ -84,7 +87,7 @@
     const emergency = false;
 </script>
 
-<div class="h-screen">
+<div id="master-widget" class="h-full">
     {#if emergency}
         <EmergencyWidget />
     {:else}
@@ -94,7 +97,7 @@
     <!-- {#each data as widget}
         <BuilderWidget {widget} />
     {/each} -->
-    <div class="h-[95%]">
+    <div class="h-[95%] p-2">
         <BuilderWidget widget={data} />
     </div>
 </div>
