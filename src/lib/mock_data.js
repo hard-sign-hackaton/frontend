@@ -1,4 +1,5 @@
 export default {
+  id: 0,
   type: "vertical",
   settings: {
     k: 3,
@@ -6,6 +7,7 @@ export default {
   },
   data: [
     {
+      id: 1,
       type: "news",
       settings: {},
       data: {
@@ -29,6 +31,7 @@ export default {
       },
     },
     {
+      id: 2,
       type: "horizontal",
       settings: {
         k: 2,
@@ -36,6 +39,7 @@ export default {
       },
       data: [
         {
+          id: 3,
           type: "static",
           data: {
             title: "1",
@@ -43,6 +47,7 @@ export default {
           },
         },
         {
+          id: 4,
           type: "vertical",
           settings: {
             k: 2,
@@ -50,6 +55,7 @@ export default {
           },
           data: [
             {
+              id: 5,
               type: "static",
               data: {
                 title: "2",
@@ -57,6 +63,7 @@ export default {
               },
             },
             {
+              id: 6,
               type: "static",
               data: {
                 title: "3",
@@ -68,6 +75,7 @@ export default {
       ],
     },
     {
+      id: 7,
       type: "dynamic",
       settings: {},
       data: {},

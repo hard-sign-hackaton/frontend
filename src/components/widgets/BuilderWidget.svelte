@@ -9,11 +9,11 @@
 </script>
 
 {#if widget.type === "news"}
-    <NewsWidget news={widget.data.news} />
+    <NewsWidget news={widget.data.news} id={widget.id} />
 {:else if widget.type === "static"}
     <StaticDataWidget {...widget.data} />
 {:else if widget.type === "dynamic"}
-    <DynamicDataWidget {...widget.data} />
+    <DynamicDataWidget {...widget.data} id={widget.id} />
 {:else if widget.type === "horizontal"}
     <HorizontalMultiwidget widgets={widget.data} settings={widget.settings} />
 {:else if widget.type === "vertical"}
