@@ -6,7 +6,7 @@
   ],
   "compilerOptions": {
     "noEmit": false,
-    "baseUrl": "./src",
+    // "baseUrl": "./src",
     "paths": {
       "components/*": ["./src/components/*"],
       "lib/*": ["./src/lib/*"],

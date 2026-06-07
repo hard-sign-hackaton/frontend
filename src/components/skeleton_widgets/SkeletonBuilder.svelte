@@ -7,11 +7,21 @@
 </script>
 
 {#if widget.type === "news" || widget.type === "static" || widget.type === "dynamic"}
-  <SkeletonData type={widget.type} />
+  <SkeletonData type={widget.type} id={widget.id} />
 {:else if widget.type === "horizontal"}
-  <SkeletonHorizontal widgets={widget.data} settings={widget.settings} />
+  <SkeletonHorizontal
+    widgets={widget.data}
+    settings={widget.settings}
+    id={widget.id}
+    type={widget.type}
+  />
 {:else if widget.type === "vertical"}
-  <SkeletonVertical widgets={widget.data} settings={widget.settings} />
+  <SkeletonVertical
+    widgets={widget.data}
+    settings={widget.settings}
+    id={widget.id}
+    type={widget.type}
+  />
 {:else}
-  <div>wtf</div>
+  <SkeletonData type={"empty"} id={"?"} />
 {/if}
