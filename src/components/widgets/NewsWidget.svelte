@@ -8,8 +8,8 @@
     }
 </script>
 
-<section class="h-full">
-    <h1>News</h1>
+<section class="h-full border border-red-500">
+    <h1>Новости</h1>
     <hr class="opacity-25 mb-2" />
     {#each news as v, i}
         <div>
