@@ -1,8 +1,163 @@
-<script>
+<script lang="ts">
   import SkeletonBuilder from "./skeleton_widgets/SkeletonBuilder.svelte";
   import MasterWidget from "./widgets/MasterWidget.svelte";
+  import {
+    selected_widget_id,
+    selected_widget_type,
+  } from "../lib/editor_store";
+  import { mock_news, mock_static, mock_dynamic } from "../lib/mock_data";
 
-  import data from "../lib/mock_data";
+  let deafult_data = {
+    id: 0,
+    type: "empty",
+  };
+  let data = $state(deafult_data);
+  let id = 1;
+
+  const widget_types = ["news", "static", "dynamic", "vertical", "horizontal"];
+  const lengths = [1, 2, 3];
+  let k = $state(1);
+  let ks = $state([0, 0, 0]);
+  let current_static_title = $state("");
+  let current_static_content = $state("");
+
+  function sleep() {
+    return new Promise((resolve) => setTimeout(resolve, 100));
+  }
+
+  function nextId() {
+    id++;
+    return id;
+  }
+
+  function findById(curr: any, id: any): any {
+    if (curr.id === id) return curr;
+
+    if (curr.type === "vertical" || curr.type === "horizontal") {
+      for (let l of curr.data) {
+        const res = findById(l, id);
+        if (res != null) return res;
+      }
+    }
+
+    return null;
+  }
+
+  async function handleStaticChange() {
+    await sleep();
+    const target = findById(data, $selected_widget_id);
+    target.data.title = current_static_title;
+    target.data.text = current_static_content;
+  }
+
+  function createFields(target: any, type: string) {
+    if (type === "vertical") {
+      target.settings = { k: 1, hs: [100] };
+      k = 1;
+      ks = [100, 0, 0];
+      target.data = [{ id: nextId(), type: "empty" }];
+    } else if (type === "horizontal") {
+      target.settings = { k: 1, ws: [100] };
+      k = 1;
+      ks = [100, 0, 0];
+      target.data = [{ id: nextId(), type: "empty" }];
+    } else if (type === "news") {
+      target.settings = {};
+      target.data = mock_news;
+    } else if (type === "static") {
+      target.settings = {};
+      target.data = {
+        title: "",
+        text: "",
+      };
+    } else if (type === "dynamic") {
+      target.settings = {};
+      target.data = mock_dynamic;
+    }
+  }
+
+  // find element with current id and fill it with k empty elements
+  async function handleKChange() {
+    await sleep();
+    const target = findById(data, $selected_widget_id);
+    target.settings.k = k;
+    if ($selected_widget_type === "vertical") {
+      let arr = Array(k).fill(Math.floor(100 / k));
+      target.settings.hs = arr;
+      ks = arr;
+    } else {
+      let arr = Array(k).fill(Math.floor(100 / k));
+      target.settings.ws = arr;
+      ks = arr;
+    }
+    const newArr = [];
+    for (let i = 0; i < k; i++) {
+      newArr.push({ id: nextId(), type: "empty" });
+    }
+    target.data = newArr;
+  }
+
+  // find element with current id and change its ks array
+  async function handleKsChange() {
+    await sleep();
+    const target = findById(data, $selected_widget_id);
+
+    for (let i in ks) {
+      if ($selected_widget_type === "vertical") {
+        target.settings.hs[i] = ks[i];
+      } else {
+        target.settings.ws[i] = ks[i];
+      }
+    }
+  }
+
+  // find element with current id and replace its type (and following structure)
+  async function handleTypeChange() {
+    await sleep();
+    const target = findById(data, $selected_widget_id);
+    const newType = $selected_widget_type;
+    target.type = newType;
+    createFields(target, newType);
+  }
+
+  function cleanWidgetTree(tree: any) {
+    if (tree.type === "vertical" || tree.type === "horizontal") {
+      tree.data = tree.data.map((x: any) => cleanWidgetTree(x));
+    } else if (tree.type == "news") {
+      return {
+        data: { news: [] },
+        ...tree,
+      };
+    } else if (tree.type == "dynamic") {
+      return {
+        data: { title: "", text: "" },
+        ...tree,
+      };
+    } else {
+      return tree;
+    }
+  }
+
+  function injectMockData(tree: any) {
+    if (tree.type === "vertical" || tree.type === "horizontal") {
+      tree.data = tree.data.map((x: any) => cleanWidgetTree(x));
+    } else if (tree.type == "news") {
+      return {
+        data: mock_news,
+        ...tree,
+      };
+    } else if (tree.type == "dynamic") {
+      return {
+        data: mock_dynamic,
+        ...tree,
+      };
+    } else {
+      return tree;
+    }
+  }
+  function saveTemplate() {
+    // send cleaned tree to server
+  }
 </script>
 
 <svelte:head>
@@ -15,7 +170,7 @@
     <div>
       <h2>Preview</h2>
       <div class="container border border-red-500 w-90 h-160">
-        <MasterWidget />
+        <MasterWidget widget={data} />
       </div>
     </div>
     <div>
@@ -44,6 +199,63 @@
               >Update display</button
             >
           </div>
+        </form>
+
+        <h3>Widget editor</h3>
+        <form>
+          <select
+            name=""
+            id=""
+            class="block"
+            bind:value={$selected_widget_type}
+            oninput={handleTypeChange}
+          >
+            {#each widget_types as type}
+              <option value={type}>{type}</option>
+            {/each}
+          </select>
+          {#if $selected_widget_type === "vertical" || $selected_widget_type === "horizontal"}
+            <div>{ks}</div>
+            <select
+              name=""
+              id=""
+              bind:value={k}
+              class="block"
+              oninput={handleKChange}
+            >
+              {#each lengths as l}
+                <option value={l}>{l}</option>
+              {/each}
+            </select>
+            {#each { length: k } as _, i}
+              <input
+                type="text"
+                placeholder={i.toString()}
+                class="border border-gray-400"
+                bind:value={ks[i]}
+                oninput={handleKsChange}
+              />
+            {/each}
+          {:else if $selected_widget_type == "static"}
+            <div class="flex flex-col">
+              <label for="">Title</label>
+              <input
+                type="text"
+                placeholder="Title"
+                class="border border-gray-400"
+                bind:value={current_static_title}
+                oninput={handleStaticChange}
+              />
+              <label for="">Text</label>
+              <input
+                type="text"
+                placeholder="Content"
+                class="border border-gray-400"
+                bind:value={current_static_content}
+                oninput={handleStaticChange}
+              />
+            </div>
+          {/if}
         </form>
       </div>
     </div>

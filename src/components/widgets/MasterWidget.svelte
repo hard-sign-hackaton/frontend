@@ -1,21 +1,20 @@
 <script lang="ts">
-    import BuilderWidget from "./BuilderWidget.svelte";
-    import EmergencyWidget from "./EmergencyWidget.svelte";
-    import HeaderWidget from "./HeaderWidget.svelte";
+  import BuilderWidget from "./BuilderWidget.svelte";
+  import EmergencyWidget from "./EmergencyWidget.svelte";
+  import HeaderWidget from "./HeaderWidget.svelte";
 
-    const { data } = $props();
-
-    const emergency = true;
+  const emergency = false;
+  let { widget } = $props();
 </script>
 
-<div id="master-widget" class="h-full flex flex-col gap-4">
-    {#if emergency}
-        <EmergencyWidget />
-    {:else}
-        <HeaderWidget />
-    {/if}
+<div id="master-widget" class="h-full">
+  {#if emergency}
+    <EmergencyWidget />
+  {:else}
+    <HeaderWidget />
+  {/if}
 
-    <div class="h-[95%]">
-        <BuilderWidget widget={data} />
-    </div>
+  <div class="h-[95%] p-1">
+    <BuilderWidget {widget} />
+  </div>
 </div>

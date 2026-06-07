@@ -6,12 +6,20 @@
   const { widget } = $props();
 </script>
 
-{#if widget.type === "news" || widget.type === "static" || widget.type === "dynamic"}
-  <SkeletonData type={widget.type} />
+{#if widget.type === "news" || widget.type === "static" || widget.type === "dynamic" || widget.type === "empty"}
+  <SkeletonData type={widget.type} id={widget.id} />
 {:else if widget.type === "horizontal"}
-  <SkeletonHorizontal widgets={widget.data} settings={widget.settings} />
+  <SkeletonHorizontal
+    widgets={widget.data}
+    settings={widget.settings}
+    id={widget.id}
+    type={widget.type}
+  />
 {:else if widget.type === "vertical"}
-  <SkeletonVertical widgets={widget.data} settings={widget.settings} />
-{:else}
-  <div>wtf</div>
+  <SkeletonVertical
+    widgets={widget.data}
+    settings={widget.settings}
+    id={widget.id}
+    type={widget.type}
+  />
 {/if}

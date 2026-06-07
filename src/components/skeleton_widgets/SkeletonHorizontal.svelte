@@ -1,14 +1,32 @@
 <script lang="ts">
-    import SkeletonBuilder from "./SkeletonBuilder.svelte";
+  import {
+    selected_widget_id,
+    selected_widget_type,
+  } from "../../lib/editor_store";
+  import SkeletonBuilder from "./SkeletonBuilder.svelte";
 
-    const { settings, widgets } = $props();
-    const { k, ws } = $derived(settings);
+  const { settings, widgets, id, type } = $props();
+  const { k, ws } = $derived(settings);
+
+  function handleClick(e: Event) {
+    e.stopPropagation();
+    selected_widget_id.set(id);
+    selected_widget_type.set(type);
+  }
 </script>
 
-<div class="h-full flex flex-row shrink-0 border border-gray-500 rounded-sm p-2">
-    {#each ws as w, i}
-        <div class={`h-full p-2`} style={`width: ${w}%;`}>
-            <SkeletonBuilder widget={{ ...widgets[i] }} />
-        </div>
-    {/each}
+<!-- svelte-ignore a11y_no_static_element_interactions -->
+<!-- svelte-ignore a11y_click_events_have_key_events -->
+<div
+  class="h-full flex flex-row shrink-0 border border-gray-500 rounded-sm p-2 hover:cursor-pointer hover:border-cyan-500"
+  onclick={handleClick}
+>
+  {#each ws as w, i}
+    <div
+      class={`h-full p-2 hover:cursor-pointer hover:border-cyan-500`}
+      style={`width: ${w}%;`}
+    >
+      <SkeletonBuilder widget={{ ...widgets[i] }} />
+    </div>
+  {/each}
 </div>

@@ -18,6 +18,4 @@
     <HorizontalMultiwidget widgets={widget.data} settings={widget.settings} />
 {:else if widget.type === "vertical"}
     <VerticalMultiwidget widgets={widget.data} settings={widget.settings} />
-{:else}
-    <div>wtf</div>
 {/if}
