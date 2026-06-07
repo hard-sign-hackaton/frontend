@@ -120,16 +120,44 @@
     createFields(target, newType);
   }
 
-  function cleanWidgetTree(tree: object) {
-    // clean tree from mock data
+  function cleanWidgetTree(tree: any) {
+    if (tree.type === "vertical" || tree.type === "horizontal") {
+      tree.data = tree.data.map((x: any) => cleanWidgetTree(x));
+    } else if (tree.type == "news") {
+      return {
+        data: { news: [] },
+        ...tree,
+      };
+    } else if (tree.type == "dynamic") {
+      return {
+        data: { title: "", text: "" },
+        ...tree,
+      };
+    } else {
+      return tree;
+    }
+  }
+
+  function injectMockData(tree: any) {
+    if (tree.type === "vertical" || tree.type === "horizontal") {
+      tree.data = tree.data.map((x: any) => cleanWidgetTree(x));
+    } else if (tree.type == "news") {
+      return {
+        data: mock_news,
+        ...tree,
+      };
+    } else if (tree.type == "dynamic") {
+      return {
+        data: mock_dynamic,
+        ...tree,
+      };
+    } else {
+      return tree;
+    }
   }
   function saveTemplate() {
     // send cleaned tree to server
   }
-
-  // $effect(() => {
-  //   console.log(ks);
-  // });
 </script>
 
 <svelte:head>
@@ -209,18 +237,24 @@
               />
             {/each}
           {:else if $selected_widget_type == "static"}
-            <input
-              type="text"
-              placeholder="Title"
-              bind:value={current_static_title}
-              oninput={handleStaticChange}
-            />
-            <input
-              type="text"
-              placeholder="Content"
-              bind:value={current_static_content}
-              oninput={handleStaticChange}
-            />
+            <div class="flex flex-col">
+              <label for="">Title</label>
+              <input
+                type="text"
+                placeholder="Title"
+                class="border border-gray-400"
+                bind:value={current_static_title}
+                oninput={handleStaticChange}
+              />
+              <label for="">Text</label>
+              <input
+                type="text"
+                placeholder="Content"
+                class="border border-gray-400"
+                bind:value={current_static_content}
+                oninput={handleStaticChange}
+              />
+            </div>
           {/if}
         </form>
       </div>
